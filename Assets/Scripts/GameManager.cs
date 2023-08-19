@@ -31,7 +31,7 @@ public class GameManager : MonoBehaviour
     void OnDeathAnimationEnd()
     {
         Explode.OnAnimationEnd -= OnDeathAnimationEnd;
-        SceneManager.LoadScene("Level1");
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 
     void OnFinishAnimationEnd()

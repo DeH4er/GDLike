@@ -8,19 +8,15 @@ using UnityEngine.UI;
 public class LevelButton : MonoBehaviour
 {
     [SerializeField] TextMeshProUGUI text;
-    int level;
 
     public void SetLevel(int level)
     {
-        this.level = level;
         text.text = level.ToString();
         var button = GetComponent<Button>();
-        button.onClick.AddListener(OnClick);
+        button.onClick.AddListener(() =>
+        {
+            SceneManager.LoadScene("Level" + level);
+        });
         button.interactable = ProgressionManager.IsLevelUnlocked(level);
-    }
-
-    void OnClick()
-    {
-        SceneManager.LoadScene("Level" + level);
     }
 }
