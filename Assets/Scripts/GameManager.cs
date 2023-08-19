@@ -1,8 +1,7 @@
-using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class GameController : MonoBehaviour
+public class GameManager : MonoBehaviour
 {
     [SerializeField] Explode explode;
 
@@ -38,6 +37,9 @@ public class GameController : MonoBehaviour
     void OnFinishAnimationEnd()
     {
         Explode.OnAnimationEnd -= OnFinishAnimationEnd;
+        var level = int.Parse(SceneManager.GetActiveScene().name.Replace("Level", ""));
+        ProgressionManager.CompleteLevel(level);
+        SceneManager.LoadScene("SelectLevelMenu");
     }
 
     void OnDestroy()
