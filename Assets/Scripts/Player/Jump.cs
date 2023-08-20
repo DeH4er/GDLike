@@ -1,12 +1,15 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class Jump : MonoBehaviour
 {
     [SerializeField] float jump = 18.95f;
+    [SerializeField] AudioClip jumpSound;
 
     Rigidbody2D rb;
     Animator spriteAnimator;
     ParticleSystem particles;
+    PlayerInput playerInput;
     bool isGrounded = false;
 
     void Start()
@@ -14,13 +17,16 @@ public class Jump : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         spriteAnimator = GetComponentInChildren<Animator>();
         particles = GetComponentInChildren<ParticleSystem>();
+        playerInput = GetComponent<PlayerInput>();
     }
 
     void Update()
     {
-        if (isGrounded && (Input.GetKeyDown(KeyCode.Space) || Input.GetKey(KeyCode.Space)))
+        if (isGrounded && playerInput.Jump.IsPressed())
         {
             rb.velocity = new Vector2(rb.velocity.x, rb.gravityScale * jump);
+            SoundManager.Instance.PlayEffect(jumpSound);
+            isGrounded = false;
         }
     }
 
